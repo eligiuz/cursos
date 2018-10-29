@@ -99,6 +99,8 @@ $mvc -> enlacesPaginasController();
  ?>
 
 </section>
+
+<script src="views/js/validarRegistro.js"></script>
 	
 </body>
 
