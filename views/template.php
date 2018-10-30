@@ -59,6 +59,10 @@
 			margin:5px;
 		}
 
+		section form input#usuarioRegistro{
+			text-transform: lowercase;
+		}
+
 		section form input[type="submit"]{
 			position:relative;
 			margin:20px auto;
