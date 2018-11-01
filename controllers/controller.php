@@ -38,11 +38,11 @@ class MvcController{
 	===========================================*/
 	public function registroUsuarioController(){
 
+		if(isset($_POST["usuarioRegistro"])){
+
 		/* preg_match => Realiza una comparación con una expresión regular */
 		
-		if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailRegistro"])){
-
-			if(isset($_POST["usuarioRegistro"])){
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailRegistro"])){
 
 				$datosController = array("usuario"=>$_POST["usuarioRegistro"],
 					"password"=>$_POST["passwordRegistro"],
@@ -78,7 +78,7 @@ class MvcController{
 
 		if(isset($_POST["usuarioIngreso"])){
 
-			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"])){
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioIngreso"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordIngreso"])){
 
 				$datosController = array("usuario"=>$_POST["usuarioIngreso"],
 					"password"=>$_POST["passwordIngreso"]
@@ -164,7 +164,7 @@ class MvcController{
 
 		if(isset($_POST["usuarioEditar"])){
 
-			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailRegistro"])){
+			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioEditar"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordEditar"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailEditar"])){
 
 				$datosController = array("id"=>$_POST["idEditar"],"usuario"=>$_POST["usuarioEditar"],"password"=>$_POST["passwordEditar"],"email"=>$_POST["emailEditar"]);
 
