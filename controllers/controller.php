@@ -44,8 +44,12 @@ class MvcController{
 		
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailRegistro"])){
 
+				/* crypt() devolverá el hash de un strin utilizando el algoritmo estándar basado en DES de Unix o algoritmos alternativos que puedan estar disponibles en el sistema. */
+				
+				$encriptar = crypt($_POST["passwordRegistro"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
 				$datosController = array("usuario"=>$_POST["usuarioRegistro"],
-					"password"=>$_POST["passwordRegistro"],
+					"password"=>$encriptar,
 					"email"=>$_POST["emailRegistro"]
 					);
 
@@ -80,13 +84,14 @@ class MvcController{
 
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioIngreso"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordIngreso"])){
 
+				$encriptar = crypt($_POST["passwordIngreso"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
 				$datosController = array("usuario"=>$_POST["usuarioIngreso"],
-					"password"=>$_POST["passwordIngreso"]
-					);
+					"password"=>$encriptar);
 
 				$respuesta = Datos::ingresoUsuarioModel($datosController, "usuarios");
 
-				if($respuesta["usuario"] == $_POST["usuarioIngreso"] && $respuesta["password"] == $_POST["passwordIngreso"]){
+				if($respuesta["usuario"] == $_POST["usuarioIngreso"] && $respuesta["password"] == $encriptar){
 
 					session_start();
 
@@ -166,7 +171,9 @@ class MvcController{
 
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioEditar"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordEditar"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailEditar"])){
 
-				$datosController = array("id"=>$_POST["idEditar"],"usuario"=>$_POST["usuarioEditar"],"password"=>$_POST["passwordEditar"],"email"=>$_POST["emailEditar"]);
+				$encriptar = crypt($_POST["passwordEditar"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+				$datosController = array("id"=>$_POST["idEditar"],"usuario"=>$_POST["usuarioEditar"],"password"=>$encriptar,"email"=>$_POST["emailEditar"]);
 
 				$respuesta = Datos::actualizarUsuarioModel($datosController, "usuarios");
 
