@@ -44,7 +44,7 @@ class MvcController{
 		
 			if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioRegistro"]) && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordRegistro"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailRegistro"])){
 
-				/* crypt() devolverá el hash de un strin utilizando el algoritmo estándar basado en DES de Unix o algoritmos alternativos que puedan estar disponibles en el sistema. */
+				/* crypt() devolverá el hash de un string utilizando el algoritmo estándar basado en DES de Unix o algoritmos alternativos que puedan estar disponibles en el sistema. */
 				
 				$encriptar = crypt($_POST["passwordRegistro"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
@@ -91,19 +91,51 @@ class MvcController{
 
 				$respuesta = Datos::ingresoUsuarioModel($datosController, "usuarios");
 
-				if($respuesta["usuario"] == $_POST["usuarioIngreso"] && $respuesta["password"] == $encriptar){
+				$intentos = $respuesta["intentos"];
+				$usuario = $_POST["usuarioIngreso"];
+				$maximoIntentos = 3;
 
-					session_start();
+				if($intentos < $maximoIntentos){
 
-					$_SESSION["validar"] = true;
+					if($respuesta["usuario"] == $_POST["usuarioIngreso"] && $respuesta["password"] == $encriptar){
 
-					header("location:index.php?action=usuarios");
+						session_start();
+
+						$_SESSION["validar"] = true;
+
+						$intentos = 0;
+
+						$datosController = array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+
+						$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "usuarios");
+
+						header("location:index.php?action=usuarios");
+
+					}
+
+					else{
+
+						++$intentos;
+
+						$datosController = array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+
+						$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "usuarios");
+
+						header("location:index.php?action=fallo");
+
+					}
 
 				}
 
 				else{
 
-					header("location:index.php?action=fallo");
+					$intentos = 0;
+
+					$datosController = array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+
+					$respuestaActualizarIntentos = Datos::intentosUsuarioModel($datosController, "usuarios");
+
+					header("location:index.php?action=fallo3intentos");
 
 				}
 

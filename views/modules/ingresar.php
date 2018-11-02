@@ -25,6 +25,12 @@
 
         }
 
+        if($_GET["action"] == "fallo3intentos"){
+
+            echo "Ha fallado 3 veces para ingresar, favor llenar el captcha";
+
+        }
+
     }
 
      ?>
