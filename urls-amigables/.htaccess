@@ -1,0 +1,4 @@
+#https://ayudawp.com/todo-sobre-htaccess/
+RewriteEngine On
+
+RewriteRule ^([a-zA-Z0-9/]+)$ index.php?pagina=$1
